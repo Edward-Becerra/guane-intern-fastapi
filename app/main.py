@@ -35,13 +35,13 @@ def Show_Dogs(db:Session=Depends(get_db)):
     dogs = db.query(models.Dog).all()
     return dogs
 
-
+# Metodo Get para listar Dogs por nombre
 @app.get("/api/dogs/{name}", response_model=schemas.Dog)
 def Show_Dogs_By_Name(name:str, db: Session = Depends(get_db)):
     dogs = db.query(models.Dog).filter_by(name=name).first()
     return dogs
 
-
+# Metodo Get para listar Dogs is adopted
 @app.get("/api/dogs/is_adopted/", response_model=List[schemas.Dog])
 def Show_Dogs_By_IsAdopted( db: Session = Depends(get_db)):
     dogs = db.query(models.Dog).filter_by(is_adopted=True).all()
