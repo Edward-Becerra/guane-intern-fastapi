@@ -13,6 +13,7 @@ import requests
 import json
 from app.auth import signJWT
 from sqlalchemy.testing.config import db
+from app.auth_bearer import JWTBearer
 
 
 # Para obtener toda la información de los objetos mapeados.
@@ -33,7 +34,7 @@ def main():
     return RedirectResponse(url="/docs/")
 
 #crear usuario
-@app.post('/api/user/', response_model=schemas.User)
+@app.post('/api/user/', dependencies=[Depends(JWTBearer())], response_model=schemas.User)
 async def Create_Users(entrada: schemas.User, db: Session = Depends(get_db)):
     user = models.User(name=entrada.name,
                        email=entrada.email,
@@ -103,7 +104,7 @@ def Delete_User(id_user: int, db: Session = Depends(get_db)):
     return response
 
 # Crear perro
-@app.post('/api/dogs/{name}', response_model=schemas.Dog)
+@app.post('/api/dogs/{name}', dependencies=[Depends(JWTBearer())], response_model=schemas.Dog)
 def Create_Dog(name: str, entrada: schemas.CreateByName, db: Session = Depends(get_db)):
 
     r = requests.get("https://dog.ceo/api/breeds/image/random")
