@@ -11,11 +11,11 @@ class User(BaseModel):
 
     class Config:
         orm_mode = True
-        
+
 
 class UserLogin(BaseModel):
     email: str
-    password : str
+    password: str
 
     class Config:
         orm_mode = True
@@ -27,29 +27,20 @@ class UserUpdate(BaseModel):
     class Config:
         orm_mode = True
 
+
 class Dog(BaseModel):
     id_dog: Optional[int]
     name: str
     picture: str
     is_adopted: bool
     create_date: str
-    id_user : int
+    id_user: int
 
     class Config:
         orm_mode = True
-        #arbitrary_types_allowed = True
+
 
 class CreateByName(BaseModel):
-    #name : str
-    is_adopted: int
-    id_user : int
-    
-    class Config:
-        orm_mode=True
-
-
-class UpdateByName(BaseModel):
-    name : str
     is_adopted: int
     id_user: int
 
@@ -57,6 +48,14 @@ class UpdateByName(BaseModel):
         orm_mode = True
 
 
-class Response( BaseModel):
+class UpdateByName(BaseModel):
+    name: str
+    is_adopted: int
+    id_user: int
+
+    class Config:
+        orm_mode = True
+
+
+class Response(BaseModel):
     message: str
-    
